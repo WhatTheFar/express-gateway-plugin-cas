@@ -1,0 +1,29 @@
+{
+	"name": "eg-auth-plugin",
+	"version": "1.0.0",
+	"description": "Authentication plugin for Express Gateway",
+	"main": "manifest.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "Apache-2.0",
+	"dependencies": {
+		"passport": "^0.4.0",
+		"passport-google-oauth20": "^1.0.0",
+		"passport-jwt": "^4.0.0",
+		"sequelize": "^4.38.0"
+	},
+	"devDependencies": {
+		"@types/json-schema": "^6.0.1",
+		"eslint": "^4.9.0",
+		"eslint-config-standard": "^10.2.1",
+		"eslint-plugin-import": "^2.8.0",
+		"eslint-plugin-node": "^5.2.1",
+		"eslint-plugin-promise": "^3.6.0",
+		"eslint-plugin-standard": "^3.0.1",
+		"express": "^4.16.3",
+		"express-gateway": "^1.10.2",
+		"jest": "^23.4.0"
+	}
+}
