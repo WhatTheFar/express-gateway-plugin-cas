@@ -1,7 +1,24 @@
 const passport = require('passport')
+const { BasicStrategy } = require('passport-http')
 const { Strategy: GoogleStrategy } = require('passport-google-oauth20')
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt')
 const User = require('../models/user-model')
+
+passport.serializeUser((user, done) => {
+	console.log('serializeUser')
+	done(null, user.id)
+})
+
+passport.deserializeUser((id, done) => {
+	console.log('deserializeUser')
+	User.findById(id)
+		.then(user => {
+			done(null, user)
+		})
+		.catch(() => {
+			done(err, false)
+		})
+})
 passport.use(
 	new GoogleStrategy(
 		{

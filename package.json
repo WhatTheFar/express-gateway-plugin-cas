@@ -11,12 +11,15 @@
 	"dependencies": {
 		"bcrypt": "^3.0.0",
 		"body-parser": "^1.18.3",
+		"express-session": "^1.15.6",
 		"jsonwebtoken": "^8.3.0",
+		"lodash": "^4.17.10",
 		"passport": "^0.4.0",
 		"passport-google-oauth20": "^1.0.0",
 		"passport-jwt": "^4.0.0",
 		"pg": "^7.4.3",
 		"pg-hstore": "^2.3.2",
+		"q": "^1.5.1",
 		"sequelize": "^4.38.0"
 	},
 	"devDependencies": {

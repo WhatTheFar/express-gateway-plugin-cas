@@ -8,16 +8,19 @@ apiEndpoints:
     host: '*'
 serviceEndpoints:
   httpbin:
-    url: 'http://localhost:8081'
+    # url: 'http://localhost:8081'
+    url: 'https://httpbin.org'
 policies:
   - proxy
   - jwt-auth
+  - session-auth
 pipelines:
   default:
     apiEndpoints:
       - api
     policies:
       - jwt-auth:
+      # - session-auth:
       - proxy:
           - action:
               serviceEndpoint: httpbin 
