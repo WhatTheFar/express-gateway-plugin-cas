@@ -7,6 +7,7 @@ const plugin = {
 	init: function(pluginContext) {
 		pluginContext.registerPolicy(require('./policies/jwt-auth-policy'))
 
+		pluginContext.registerGatewayRoute(require('./routes/google-oauth20-eg'))
 	},
 	policies: ['auth'], // this is for CLI to automatically add to "policies" whitelist in gateway.config
 }
