@@ -1,5 +1,6 @@
 const passport = require('passport')
 const { Strategy: GoogleStrategy } = require('passport-google-oauth20')
+const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt')
 const User = require('../models/user-model')
 passport.use(
 	new GoogleStrategy(
@@ -27,4 +28,30 @@ passport.use(
 		}
 	)
 )
+
+passport.use(
+	new JwtStrategy(
+		{
+			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+			secretOrKey: 'this_is_a_secret',
+			passReqToCallback: true
+		},
+		function(req, jwtPayload, done) {
+			console.log('jwt verify')
+			User.findOne({ username: jwtPayload.username })
+				.then(user => {
+					if (user) {
+						req.headers['USERINFO'] = JSON.stringify(user)
+						return done(null, user)
+					}
+					console.log('no userrrrrrrrrrrr')
+					return done(null, false)
+				})
+				.catch(err => {
+					return done(err, false)
+				})
+		}
+	)
+)
+
 module.exports = passport
