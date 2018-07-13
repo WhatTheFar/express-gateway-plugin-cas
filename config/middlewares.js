@@ -2,12 +2,23 @@ const session = require('express-session')
 const passport = require('./passport')
 const bodyParser = require('body-parser')
 
-const middlewares = [
-    session({ secret: 'session_secret' }),
-    bodyParser.json(),
-    bodyParser.urlencoded({ extended: false }),
+const jsonMiddleware = bodyParser.json()
+const urlencodedMiddleware = bodyParser.urlencoded({ extended: false })
+const passportMiddlewares = [
+    session({ secret: 'session_secret' }), 
     passport.initialize(),
-    passport.session()
+	passport.session()
 ]
 
-module.exports = middlewares
+const middlewares = [
+    jsonMiddleware,
+    urlencodedMiddleware,
+    ...passportMiddlewares
+]
+
+module.exports = {
+    jsonMiddleware,
+    urlencodedMiddleware,
+    passportMiddlewares,
+    middlewares
+}

@@ -1,11 +1,12 @@
 const passport = require('../config/passport')
-const middlewares = require('../config/middlewares')
+const { jsonMiddleware } = require('../config/middlewares')
 const asyncifyHandler = require('../utils/async-handler')
 const User = require('../models/user-model')
 
 module.exports = gatewayExpressApp => {
 	gatewayExpressApp.post(
 		'/auth/user',
+		jsonMiddleware,
 		asyncifyHandler(async (req, res, next) => {
 			try {
 				const user = await User.create({
