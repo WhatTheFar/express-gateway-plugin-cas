@@ -8,9 +8,11 @@ const plugin = {
 		pluginContext.registerPolicy(require('./policies/jwt-auth-policy'))
 		pluginContext.registerPolicy(require('./policies/basic-auth-policy'))
 		pluginContext.registerPolicy(require('./policies/session-auth-policy'))
+		pluginContext.registerPolicy(require('./policies/local-auth-policy'))
+		pluginContext.registerGatewayRoute(require('./routes/auth-eg'))
 		pluginContext.registerGatewayRoute(require('./routes/google-oauth20-eg'))
 	},
-	policies: ['jwt-auth', 'basic-auth', 'session-auth'], // this is for CLI to automatically add to "policies" whitelist in gateway.config
+	policies: ['jwt-auth', 'basic-auth', 'session-auth', 'local-auth'], // this is for CLI to automatically add to "policies" whitelist in gateway.config
 }
 
 module.exports = plugin

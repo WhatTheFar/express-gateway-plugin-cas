@@ -5,11 +5,11 @@ const passport = require('../config/passport')
 
 /** @type {ExpressGateway.Policy} */
 const policy = {
-	name: 'basic-auth',
+	name: 'local-auth',
 	policy: actionParams => {
 		return (req, res, next) => {
 			// TODO: add custom callback
-			passport.authenticate('basic-plugin', { session: false })(req, res, next)
+			passport.authenticate('local-plugin', { session: false })(req, res, next)
 		}
 	}
 }

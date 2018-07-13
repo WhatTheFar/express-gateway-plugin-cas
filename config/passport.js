@@ -1,5 +1,6 @@
 const passport = require('passport')
 const { BasicStrategy } = require('passport-http')
+const { Strategy: LocalStrategy } = require('passport-local')
 const { Strategy: GoogleStrategy } = require('passport-google-oauth20')
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt')
 const User = require('../models/user-model')
@@ -19,6 +20,26 @@ passport.deserializeUser((id, done) => {
 			done(err, false)
 		})
 })
+
+passport.use(
+	'local-plugin',
+	new LocalStrategy(async function(username, password, done) {
+		try {
+			const user = await User.findOne({ where: { username } })
+			if (!user) {
+				return done(null, false, { message: 'Incorrect username.' })
+			}
+			const isValid = await user.comparePassword(password)
+			if (!isValid) {
+				return done(null, false, { message: 'Incorrect password.' })
+			}
+			return done(null, user)
+		} catch (error) {
+			return done(error)
+		}
+	})
+)
+
 passport.use(
 	'basic-plugin',
 	new BasicStrategy(async function(username, password, done) {
