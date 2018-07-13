@@ -6,11 +6,12 @@ const jwt = require('jsonwebtoken')
 const UserSchema = {
 	username: {
 		type: Sequelize.STRING,
-		required: true
+		allowNull: false,
+		unique: true
 	},
 	password: {
 		type: Sequelize.STRING,
-		required: true
+		allowNull: false
 	},
 	first_name: {
 		type: Sequelize.STRING
@@ -31,11 +32,14 @@ User.prototype.comparePassword = function(password) {
 User.prototype.generateAuthToken = function() {
 	return jwt.sign(
 		{
-			uid: this.id
+			username: this.username
 		},
 		'this_is_a_secret'
 	)
 }
+
+User.findByPayload = async payload =>
+	User.findOne({ where: { username: payload.username } })
 
 const hashPassword = async password => {
 	const salt = await bcrypt.genSalt(10)
