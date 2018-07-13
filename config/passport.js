@@ -95,20 +95,17 @@ passport.use(
 			secretOrKey: 'this_is_a_secret',
 			passReqToCallback: true
 		},
-		function(req, jwtPayload, done) {
-			console.log('jwt verify')
-			User.findOne({ username: jwtPayload.username })
-				.then(user => {
-					if (user) {
-						req.headers['USERINFO'] = JSON.stringify(user)
-						return done(null, user)
-					}
-					console.log('no userrrrrrrrrrrr')
-					return done(null, false)
-				})
-				.catch(err => {
-					return done(err, false)
-				})
+		async function(req, jwtPayload, done) {
+			try {
+				const user = await User.findByPayload(jwtPayload)
+				if (user) {
+					req.headers['USERINFO'] = JSON.stringify(user)	
+					return done(null, user)
+				}
+				return done(null, false)
+			} catch (error) {
+				return done(error)
+			}
 		}
 	)
 )
