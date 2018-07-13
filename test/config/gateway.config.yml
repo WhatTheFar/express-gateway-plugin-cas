@@ -4,8 +4,15 @@ admin:
   port: 9876
   hostname: localhost
 apiEndpoints:
-  api:
+  jwt:
     host: '*'
+    path: '/jwt'
+  basic:
+    host: '*'
+    path: '/basic'
+  session:
+    host: '*'
+    path: '/session'
 serviceEndpoints:
   httpbin:
     # url: 'http://localhost:8081'
@@ -13,15 +20,27 @@ serviceEndpoints:
 policies:
   - proxy
   - jwt-auth
+  - basic-auth
   - session-auth
 pipelines:
-  default:
+  jwt:
     apiEndpoints:
-      - api
+      - jwt
     policies:
       - jwt-auth:
-      # - session-auth:
-      - proxy:
+      - proxy: &proxy
           - action:
               serviceEndpoint: httpbin 
               changeOrigin: true
+  basic:
+    apiEndpoints:
+      - basic
+    policies:
+      - basic-auth:
+      - proxy: *proxy
+  session:
+    apiEndpoints:
+      - session
+    policies:
+      - session-auth:
+      - proxy: *proxy

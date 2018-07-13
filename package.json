@@ -4,7 +4,8 @@
 	"description": "Authentication plugin for Express Gateway",
 	"main": "manifest.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"serve-debug": "nodemon --watch . --delay 1 --inspect test/server.js"
 	},
 	"author": "",
 	"license": "Apache-2.0",
