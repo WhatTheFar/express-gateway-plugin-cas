@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 
 const middlewares = [
     session({ secret: 'session_secret' }),
+    bodyParser.json(),
     bodyParser.urlencoded({ extended: false }),
     passport.initialize(),
     passport.session()

@@ -20,6 +20,25 @@ passport.deserializeUser((id, done) => {
 		})
 })
 passport.use(
+	'basic-plugin',
+	new BasicStrategy(async function(username, password, done) {
+		try {
+			const user = await User.findOne({ where: { username } })
+			if (!user) {
+				return done(null, false, { message: 'Incorrect username.' })
+			}
+			const isValid = await user.comparePassword(password)
+			if (!isValid) {
+				return done(null, false, { message: 'Incorrect password.' })
+			}
+			return done(null, user)
+		} catch (error) {
+			return done(error)
+		}
+	})
+)
+
+passport.use(
 	new GoogleStrategy(
 		{
 			clientID:
@@ -30,7 +49,9 @@ passport.use(
 		async function(accessToken, refreshToken, profile, done) {
 			try {
 				const username = profile.id
-				const user = await User.findOne({ username })
+				console.log(profile)
+				// TODO: use findOrCreate
+				const user = await User.findOne({ where: { username } })
 				if (user) {
 					return done(null, user)
 				}
