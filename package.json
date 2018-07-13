@@ -27,7 +27,6 @@
 	},
 	"devDependencies": {
 		"@types/json-schema": "^6.0.1",
-		"@types/passport-jwt": "^3.0.1",
 		"eslint": "^4.9.0",
 		"eslint-config-standard": "^10.2.1",
 		"eslint-plugin-import": "^2.8.0",
