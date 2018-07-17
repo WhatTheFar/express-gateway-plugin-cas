@@ -3,6 +3,8 @@
 
 const { passportMiddlewares } = require('../config/middlewares')
 const invokeMiddleware = require('../utils/invokeMiddleware')
+const { setReqRemoteUser } = require('../utils/request-util')
+
 
 /** @type {ExpressGateway.Policy} */
 const policy = {
@@ -15,6 +17,7 @@ const policy = {
 					if (!req.user) {
 						return res.send('unauthorized')
 					}
+					setReqRemoteUser(req, req.user)
 					next()
 				})
 				.catch(err => {
