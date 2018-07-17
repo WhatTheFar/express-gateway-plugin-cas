@@ -2,6 +2,7 @@ const passport = require('../config/passport')
 const {
 	jsonMiddleware,
 	urlencodedMiddleware,
+	passportMiddlewares,
 	middlewares
 } = require('../config/middlewares')
 
@@ -34,4 +35,9 @@ module.exports = gatewayExpressApp => {
 			res.send('Success')
 		}
 	)
+
+	gatewayExpressApp.get('/auth/logout', passportMiddlewares, (req, res) => {
+		req.logout()
+		res.send('Success')
+	})
 }
