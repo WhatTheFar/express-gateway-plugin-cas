@@ -1,11 +1,11 @@
 
-const setReqRemoteUser = (req, user) => {
+const setReqAuthUser = (req, user) => {
     if (user) {
-        req.headers['REMOTE_USER'] = user.username
+        req.headers['Auth-User'] = user.username
     }
     return req
 }
 
 module.exports = {
-    setReqRemoteUser
+    setReqAuthUser
 }

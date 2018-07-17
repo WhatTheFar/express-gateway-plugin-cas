@@ -4,7 +4,7 @@ const { Strategy: LocalStrategy } = require('passport-local')
 const { Strategy: GoogleStrategy } = require('passport-google-oauth20')
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt')
 const User = require('../models/user-model')
-const { setReqRemoteUser } = require('../utils/request-util')
+const { setReqAuthUser } = require('../utils/request-util')
 
 passport.serializeUser((user, done) => {
 	console.log('serializeUser')
@@ -101,7 +101,7 @@ passport.use(
 				const user = await User.findByPayload(jwtPayload)
 				if (user) {
 					// TODO: refactor to middleware
-					setReqRemoteUser(req, user)
+					setReqAuthUser(req, user)
 					return done(null, user)
 				}
 				return done(null, false)
