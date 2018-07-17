@@ -1,5 +1,5 @@
 {
-	"name": "eg-auth-plugin",
+	"name": "express-gateway-plugin-cas",
 	"version": "1.0.0",
 	"description": "Authentication plugin for Express Gateway",
 	"main": "manifest.js",
