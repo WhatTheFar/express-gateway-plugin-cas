@@ -15,8 +15,8 @@ apiEndpoints:
     path: '/session'
 serviceEndpoints:
   httpbin:
-    # url: 'http://localhost:8081'
-    url: 'https://httpbin.org'
+    url: 'http://localhost:8081'
+    # url: 'https://httpbin.org'
 policies:
   - proxy
   - jwt-auth
