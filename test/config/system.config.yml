@@ -6,4 +6,4 @@ db:
 
 plugins:
   eg-auth-plugin:
-    package: '../manifest.js'
+    package: '../dist/manifest.js'
