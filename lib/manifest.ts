@@ -1,5 +1,6 @@
 import 'express-gateway';
 import { initDatabase } from './config/db';
+import authSecurePolicy from './policies/auth-secure-policy';
 import basicPolicy from './policies/basic-auth-policy';
 import jwtPolicy from './policies/jwt-auth-policy';
 import localPolicy from './policies/local-auth-policy';
@@ -16,6 +17,7 @@ const plugin: ExpressGateway.Plugin = {
 			'postgres://postgres:password@localhost:5432/postgres';
 		initDatabase(dbURI);
 
+		pluginContext.registerPolicy(authSecurePolicy);
 		pluginContext.registerPolicy(jwtPolicy);
 		pluginContext.registerPolicy(basicPolicy);
 		pluginContext.registerPolicy(localPolicy);
@@ -24,7 +26,7 @@ const plugin: ExpressGateway.Plugin = {
 		pluginContext.registerGatewayRoute(authUserRoutes);
 		pluginContext.registerGatewayRoute(googleOauth20Routes);
 	},
-	policies: ['jwt-auth', 'session-auth', 'local-auth']
+	policies: ['auth-secure', 'jwt-auth', 'session-auth', 'local-auth']
 };
 
 export = plugin;
