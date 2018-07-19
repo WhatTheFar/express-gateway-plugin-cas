@@ -24,7 +24,7 @@ export default (gatewayExpressApp: Application) => {
 		jsonMiddleware,
 		urlencodedMiddleware,
 		passport.authenticate('local-plugin', { session: false }),
-		(req, res, next) => {
+		(req: Request, res: Response, next: NextFunction) => {
 			const user = req.user as User;
 			const token = user.generateAuthToken();
 			res.json({ token });
