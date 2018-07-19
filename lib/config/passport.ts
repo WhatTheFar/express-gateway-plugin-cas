@@ -62,6 +62,7 @@ passport.use(
 );
 
 passport.use(
+	'google-plugin',
 	new GoogleStrategy(
 		{
 			clientID:
@@ -90,6 +91,7 @@ passport.use(
 );
 
 passport.use(
+	'jwt-plugin',
 	new JwtStrategy(
 		{
 			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
