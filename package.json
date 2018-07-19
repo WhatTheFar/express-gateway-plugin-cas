@@ -11,10 +11,10 @@
 		"watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"yarn watch-ts\" \"yarn serve\"",
 		"test": "jest --forceExit",
 		"watch-test": "yarn test --watchAll",
-		"build-ts": "tsc -p .",
-		"watch-ts": "tsc -p . -w",
+		"build-ts": "tsc -p tsconfig.json",
+		"watch-ts": "tsc -p tsconfig.json -w",
 		"lint": "yarn tslint && yarn prettier",
-		"tslint": "tslint -c tslint.json -p tsconfig.json",
+		"tslint": "tslint --fix -c tslint.json -p tsconfig.json",
 		"prettier": "prettier --config ./.prettierrc --write \"./lib/**/*.ts\"",
 		"debug": "yarn build && yarn watch-debug",
 		"serve-debug": "nodemon --watch dist --delay 1 --inspect test/server.js",
@@ -39,7 +39,7 @@
 		"q": "^1.5.1",
 		"reflect-metadata": "^0.1.12",
 		"sequelize": "^4.38.0",
-		"sequelize-typescript": "^0.6.5"
+		"sequelize-typescript": "^0.6.6-beta.1"
 	},
 	"devDependencies": {
 		"@types/bcrypt": "^2.0.0",
@@ -56,6 +56,7 @@
 		"@types/passport-local": "^1.0.33",
 		"@types/q": "^1.5.0",
 		"@types/sequelize": "^4.27.24",
+		"concurrently": "^3.6.0",
 		"eslint": "^4.9.0",
 		"eslint-config-standard": "^10.2.1",
 		"eslint-plugin-import": "^2.8.0",
@@ -67,6 +68,7 @@
 		"jest": "^23.4.0",
 		"nodemon": "^1.18.3",
 		"prettier": "^1.13.7",
-		"tslint": "^5.11.0"
+		"tslint": "^5.11.0",
+		"typescript": "^2.9.2"
 	}
 }
