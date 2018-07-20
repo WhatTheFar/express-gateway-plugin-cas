@@ -1,10 +1,11 @@
 import 'express-gateway';
+import { AUTH_HEADER } from './../config/index';
 
 const policy: ExpressGateway.Policy = {
 	name: 'auth-secure',
 	policy: actionParams => {
 		return (req, res, next) => {
-			delete req.headers['auth-user'];
+			delete req.headers[AUTH_HEADER];
 			next();
 		};
 	},
