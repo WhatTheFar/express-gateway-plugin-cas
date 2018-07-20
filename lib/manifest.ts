@@ -12,10 +12,7 @@ import googleOauth20Routes from './routes/google-oauth20-eg';
 const plugin: ExpressGateway.Plugin = {
 	version: '1.3.0',
 	init: pluginContext => {
-		const dbURI =
-			process.env.DATABASE_URL ||
-			'postgres://postgres:password@localhost:5432/postgres';
-		initDatabase(dbURI);
+		initDatabase();
 
 		pluginContext.registerPolicy(authSecurePolicy);
 		pluginContext.registerPolicy(jwtPolicy);
