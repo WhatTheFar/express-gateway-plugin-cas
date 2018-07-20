@@ -23,8 +23,8 @@ export const getCommonAuthCallback = (
 		}
 
 		if (
-			(actionParams.passThroughSafeMethod && _.includes(SAFE_METHOD, req.method)) ||
-			actionParams.passThrough
+			actionParams.passThrough ||
+			(actionParams.passThroughSafeMethod && _.includes(SAFE_METHOD, req.method))
 		) {
 			return next();
 		}
