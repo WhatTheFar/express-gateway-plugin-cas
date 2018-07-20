@@ -10,9 +10,21 @@ apiEndpoints:
   basic:
     host: '*'
     path: '/basic'
+  local:
+    host: '*'
+    path: '/local'
   session:
     host: '*'
     path: '/session'
+  secure:
+    host: '*'
+    path: '/secure'
+  pass:
+    host: '*'
+    path: '/pass'
+  passSafe:
+    host: '*'
+    path: '/passsafe'
 serviceEndpoints:
   httpbin:
     url: 'http://localhost:8081'
@@ -21,7 +33,9 @@ policies:
   - proxy
   - jwt-auth
   - basic-auth
+  - local-auth
   - session-auth
+  - auth-secure
 pipelines:
   jwt:
     apiEndpoints:
@@ -38,9 +52,41 @@ pipelines:
     policies:
       - basic-auth:
       - proxy: *proxy
+  local:
+    apiEndpoints:
+      - local
+    policies:
+      - local-auth:
+      - proxy: *proxy
   session:
     apiEndpoints:
       - session
     policies:
       - session-auth:
+      - proxy: *proxy
+  secure:
+    apiEndpoints:
+      - secure
+    policies:
+      - auth-secure:
+      - proxy: *proxy
+  pass:
+    apiEndpoints:
+      - pass
+    policies:
+      - auth-secure:
+      - basic-auth:
+          - action:
+              passThrough: true
+      - jwt-auth:
+      - proxy: *proxy
+  passSafe:
+    apiEndpoints:
+      - passSafe
+    policies:
+      - auth-secure:
+      - basic-auth:
+          - action:
+              passThroughSafeMethod: true
+      - jwt-auth:
       - proxy: *proxy
