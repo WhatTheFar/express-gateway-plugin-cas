@@ -13,7 +13,11 @@ const policy: ExpressGateway.Policy = {
 			invokeMiddleware(passportMiddlewares, req, res)
 				.then(() => {
 					const user = req.user as User;
-					return getCommonAuthCallback(actionParams, req, res, next)(null, user, null);
+					return getCommonAuthCallback(actionParams, req, res, next)(
+						null,
+						user,
+						null
+					);
 				})
 				.catch(err => {
 					next(err);

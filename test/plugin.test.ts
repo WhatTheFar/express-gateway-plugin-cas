@@ -64,7 +64,9 @@ describe('User routes', () => {
 	});
 	test('should delete test user', async () => {
 		// expect.assertions(1);
-		const { status } = await axiosInstance.delete(`/auth/user/${testCredential.username}`);
+		const { status } = await axiosInstance.delete(
+			`/auth/user/${testCredential.username}`
+		);
 		expect(status).toBe(200);
 	});
 });

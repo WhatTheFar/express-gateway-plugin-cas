@@ -15,7 +15,7 @@
 		"watch-ts": "tsc -p tsconfig.json -w",
 		"lint": "yarn tslint && yarn prettier",
 		"tslint": "tslint --fix -c tslint.json -p tsconfig.json",
-		"prettier": "prettier --config ./.prettierrc --write \"./lib/**/*.ts\"",
+		"prettier": "prettier --config .prettierrc --write \"./{lib,test}/**/*.ts\"",
 		"debug": "yarn build && yarn watch-debug",
 		"serve-debug": "nodemon --watch dist --delay 1 --inspect test/gateway.js",
 		"watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"yarn watch-ts\" \"yarn serve-debug\""
