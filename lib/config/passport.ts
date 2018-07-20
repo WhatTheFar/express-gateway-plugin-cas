@@ -8,12 +8,10 @@ import User from '../models/user-model';
 import { setReqAuthUser } from '../utils/request-util';
 
 passport.serializeUser((user: User, done) => {
-	console.log('serializeUser');
 	return done(null, user.id);
 });
 
 passport.deserializeUser((id: string, done) => {
-	console.log('deserializeUser');
 	User.findById(id)
 		.then(user => {
 			return done(null, !!user ? user : false);
@@ -103,7 +101,6 @@ passport.use(
 				const user = await User.findByPayload(jwtPayload);
 				if (user) {
 					// TODO: refactor to middleware
-					setReqAuthUser(req, user);
 					return done(null, user);
 				}
 				return done(null, false);
