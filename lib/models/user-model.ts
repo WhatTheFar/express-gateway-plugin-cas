@@ -4,10 +4,12 @@ import {
 	AllowNull,
 	BeforeCreate,
 	Column,
+	Default,
 	Model,
 	Table,
 	Unique
 } from 'sequelize-typescript';
+import { JWT_SECRET } from '../config';
 
 @Table({
 	tableName: 'users'
@@ -35,6 +37,10 @@ class User extends Model<User> {
 	@Column
 	public password!: string;
 
+	@Default(false)
+	@Column
+	public isAdmin!: boolean;
+
 	@Column public firstname!: string;
 
 	@Column public lastname!: string;
@@ -49,7 +55,7 @@ class User extends Model<User> {
 				username: this.username,
 				password: this.password
 			},
-			'this_is_a_secret'
+			JWT_SECRET
 		);
 	}
 }

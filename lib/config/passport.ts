@@ -4,6 +4,7 @@ import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import { BasicStrategy } from 'passport-http';
 import { ExtractJwt, Strategy as JwtStrategy, VerifiedCallback } from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
+import { JWT_SECRET } from '.';
 import User from '../models/user-model';
 import { setReqAuthUser } from '../utils/request-util';
 
@@ -93,7 +94,7 @@ passport.use(
 	new JwtStrategy(
 		{
 			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-			secretOrKey: 'this_is_a_secret',
+			secretOrKey: JWT_SECRET,
 			passReqToCallback: true
 		},
 		async function(req: Request, jwtPayload: any, done: VerifiedCallback) {

@@ -3,9 +3,4 @@ export const DATABASE_URL =
 
 export const AUTH_HEADER = process.env.AUTH_HEADER || 'auth-user';
 
-const config = {
-	DATABASE_URL,
-	AUTH_HEADER
-};
-
-export default config;
+export const JWT_SECRET = process.env.JWT_SECRET || 'this_is_a_secret';
