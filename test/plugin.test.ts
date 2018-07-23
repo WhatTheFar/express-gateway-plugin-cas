@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
+import * as dotenv from 'dotenv';
 import { Server } from 'http';
-import { AUTH_HEADER } from './../lib/config/index';
+import { ADMIN_KEY, AUTH_HEADER } from './../lib/config/index';
 import app from './app';
 
 let Application: Server;
@@ -12,11 +13,17 @@ const credential = {
 	password
 };
 
+let apiKeyAuthHeader: any;
 let jwtAuthHeader: any;
 const basicAuthOption: any = {
 	auth: credential
 };
 
+const setApiKeyAuthHeader = (apiKey: string) => {
+	apiKeyAuthHeader = {
+		Authorization: `apiKey ${apiKey}`
+	};
+};
 const setJwtHeader = (token: string) => {
 	jwtAuthHeader = {
 		Authorization: `Bearer ${token}`
@@ -24,12 +31,17 @@ const setJwtHeader = (token: string) => {
 };
 
 beforeAll(async done => {
+	dotenv.config();
 	axiosInstance = axios.create({
 		baseURL: 'http://localhost:8080/',
 		validateStatus: status => status < 400
 	});
+
+	setApiKeyAuthHeader(ADMIN_KEY);
 	try {
-		await axiosInstance.post('/auth/user', credential);
+		await axiosInstance.post('/auth/user', credential, {
+			headers: apiKeyAuthHeader
+		});
 	} catch (error) {
 		console.log();
 	}
@@ -59,13 +71,18 @@ describe('User routes', () => {
 	};
 	test('should create test user', async () => {
 		// expect.assertions(1);
-		const { data } = await axiosInstance.post('/auth/user', testCredential);
+		const { data } = await axiosInstance.post('/auth/user', testCredential, {
+			headers: apiKeyAuthHeader
+		});
 		expect(data.username).toBe(testCredential.username);
 	});
 	test('should delete test user', async () => {
 		// expect.assertions(1);
 		const { status } = await axiosInstance.delete(
-			`/auth/user/${testCredential.username}`
+			`/auth/user/${testCredential.username}`,
+			{
+				headers: apiKeyAuthHeader
+			}
 		);
 		expect(status).toBe(200);
 	});
