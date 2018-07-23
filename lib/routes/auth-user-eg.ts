@@ -5,6 +5,31 @@ import { asyncifyHandler } from './../utils/async-handler';
 import { ResponseUtil } from './../utils/response-util';
 
 export default (gatewayExpressApp: Application) => {
+	gatewayExpressApp.get(
+		'/auth/user',
+		asyncifyHandler(async (req, res, next) => {
+			try {
+				const users = await User.findAll();
+				return res.json(users);
+			} catch (error) {
+				next(error);
+			}
+		})
+	);
+
+	gatewayExpressApp.get(
+		'/auth/user/:username',
+		asyncifyHandler(async (req, res, next) => {
+			const username = req.params.username;
+			try {
+				const user = await User.findOne({ where: { username } });
+				return res.json(user);
+			} catch (error) {
+				next(error);
+			}
+		})
+	);
+
 	gatewayExpressApp.post(
 		'/auth/user',
 		jsonMiddleware,
@@ -15,15 +40,15 @@ export default (gatewayExpressApp: Application) => {
 				});
 				return res.json(user);
 			} catch (error) {
-				next(error);
+				return ResponseUtil.sendDuplicateKeyError(res, 'Username is invalid');
 			}
 		})
 	);
 
 	gatewayExpressApp.delete(
-		'/auth/user/:id',
+		'/auth/user/:username',
 		asyncifyHandler(async (req, res, next) => {
-			const row = await User.destroy({ where: { username: req.params.id } });
+			const row = await User.destroy({ where: { username: req.params.username } });
 			if (row > 0) {
 				return res.send('Success');
 			}
