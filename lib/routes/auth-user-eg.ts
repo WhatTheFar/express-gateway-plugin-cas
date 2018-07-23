@@ -23,6 +23,9 @@ export default (gatewayExpressApp: Application) => {
 			const username = req.params.username;
 			try {
 				const user = await User.findOne({ where: { username } });
+				if (!user) {
+					return ResponseUtil.sendInvalidId(res);
+				}
 				return res.json(user);
 			} catch (error) {
 				next(error);
