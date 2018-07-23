@@ -31,6 +31,15 @@ export default (gatewayExpressApp: Application) => {
 		}
 	);
 
+	gatewayExpressApp.get(
+		'/auth/login',
+		middlewares,
+		passport.authenticate('basic-plugin'),
+		(req: Request, res: Response, next: NextFunction) => {
+			res.send('Success');
+		}
+	);
+
 	gatewayExpressApp.post(
 		'/auth/login',
 		middlewares,
