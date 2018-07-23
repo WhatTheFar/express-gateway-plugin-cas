@@ -5,4 +5,4 @@ export const AUTH_HEADER = process.env.AUTH_HEADER || 'auth-user';
 
 export const JWT_SECRET = process.env.JWT_SECRET || 'this_is_a_secret';
 
-export const ADMIN_KEY = process.env.ADMIN_KEY || 'NlU1ik6UU1MCB}m';
+export const ADMIN_KEY = process.env.ADMIN_KEY || 'this_is_an_admin_api_key';
