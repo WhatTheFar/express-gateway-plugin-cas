@@ -1,4 +1,5 @@
 import { Application } from 'express-serve-static-core';
+import { apiKeyAuthorize } from '../middleware/authentication';
 import User from '../models/user-model';
 import { jsonMiddleware } from './../config/middlewares';
 import { asyncifyHandler } from './../utils/async-handler';
@@ -7,6 +8,7 @@ import { ResponseUtil } from './../utils/response-util';
 export default (gatewayExpressApp: Application) => {
 	gatewayExpressApp.get(
 		'/auth/user',
+		apiKeyAuthorize,
 		asyncifyHandler(async (req, res, next) => {
 			try {
 				const users = await User.findAll();
@@ -19,6 +21,7 @@ export default (gatewayExpressApp: Application) => {
 
 	gatewayExpressApp.get(
 		'/auth/user/:username',
+		apiKeyAuthorize,
 		asyncifyHandler(async (req, res, next) => {
 			const username = req.params.username;
 			try {
@@ -36,6 +39,7 @@ export default (gatewayExpressApp: Application) => {
 	gatewayExpressApp.post(
 		'/auth/user',
 		jsonMiddleware,
+		apiKeyAuthorize,
 		asyncifyHandler(async (req, res, next) => {
 			try {
 				const user = await User.create({
@@ -50,6 +54,7 @@ export default (gatewayExpressApp: Application) => {
 
 	gatewayExpressApp.delete(
 		'/auth/user/:username',
+		apiKeyAuthorize,
 		asyncifyHandler(async (req, res, next) => {
 			const row = await User.destroy({ where: { username: req.params.username } });
 			if (row > 0) {

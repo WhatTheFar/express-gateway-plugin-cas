@@ -1,11 +1,11 @@
 import { Response } from 'express-serve-static-core';
 
 export class ResponseUtil {
-	public static sendUnauthorized = (res: Response) =>
+	public static sendUnauthorized = (res: Response, message = 'Unauthorized') =>
 		res.status(401).json({
 			name: 'AuthorizationError',
 			code: 100,
-			message: 'Unauthorized'
+			message
 		});
 
 	public static sendForbidden = (res: Response) =>
