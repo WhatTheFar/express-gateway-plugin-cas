@@ -1,6 +1,9 @@
 # TypeScript
 dist/
 
+# vscode
+.vscode
+
 # Logs
 logs
 *.log
