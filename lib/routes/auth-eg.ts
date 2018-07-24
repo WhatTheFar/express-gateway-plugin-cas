@@ -6,7 +6,7 @@ import {
 	middlewares,
 	passportMiddlewares,
 	urlencodedMiddleware
-} from './../config/middlewares';
+} from './../middleware';
 
 export default (gatewayExpressApp: Application) => {
 	gatewayExpressApp.get(

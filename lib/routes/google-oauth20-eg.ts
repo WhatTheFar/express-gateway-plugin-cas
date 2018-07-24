@@ -2,7 +2,7 @@ import { Request, Response } from 'express-serve-static-core';
 import { Application } from 'express-serve-static-core';
 import passport from '../config/passport';
 import User from '../models/user-model';
-import { passportMiddlewares } from './../config/middlewares';
+import { passportMiddlewares } from './../middleware';
 
 export default (gatewayExpressApp: Application) => {
 	gatewayExpressApp.get(
