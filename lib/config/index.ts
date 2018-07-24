@@ -22,7 +22,7 @@ export let JWT_SECRET = 'jwt_secret';
 
 export let JWT_EXPIRATION_DELTA = null;
 
-export let JWT_REFRESH_EXPIRATION_DELTA = '14d';
+export let JWT_REFRESH_EXPIRATION_DELTA = null;
 
 export const initConfig = (settings: any) => {
 	DATABASE_URL = settings.DATABASE_URL || DATABASE_URL;

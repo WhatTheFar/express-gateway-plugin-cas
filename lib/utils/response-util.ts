@@ -22,6 +22,13 @@ export class ResponseUtil {
 			message: 'Token is expired'
 		});
 
+	public static sendRefreshExpiredError = (res: Response) =>
+		res.status(401).json({
+			name: 'RefreshExpiredError',
+			code: 110,
+			message: 'Refresh token is expired'
+		});
+
 	public static sendInvalidId = (res: Response) =>
 		res.status(400).json({
 			name: 'InvalidIdError',

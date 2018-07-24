@@ -8,6 +8,7 @@ import {
 	passportMiddlewares,
 	urlencodedMiddleware
 } from './../middleware';
+import { getRefreshTokenCallback } from './../utils/passport-util';
 
 export default (gatewayExpressApp: Application) => {
 	gatewayExpressApp.options('/auth/token', corsMiddleware);
@@ -35,6 +36,20 @@ export default (gatewayExpressApp: Application) => {
 			const user = req.user as User;
 			const token = user.generateAuthToken();
 			res.json({ token });
+		}
+	);
+
+	gatewayExpressApp.post(
+		'/auth/refresh',
+		corsMiddleware,
+		jsonMiddleware,
+		urlencodedMiddleware,
+		(req: Request, res: Response, next: NextFunction) => {
+			passport.authenticate(
+				'jwt-plugin',
+				{ session: false },
+				getRefreshTokenCallback(req, res, next)
+			)(req, res, next);
 		}
 	);
 

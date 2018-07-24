@@ -5,8 +5,7 @@ import { BasicStrategy } from 'passport-http';
 import { ExtractJwt, Strategy as JwtStrategy, VerifiedCallback } from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { JWT_SECRET } from '.';
-import User from '../models/user-model';
-import { setReqAuthUser } from '../utils/request-util';
+import User, { IJwtPayload } from '../models/user-model';
 
 passport.serializeUser((user: User, done) => {
 	return done(null, user.id);
@@ -97,12 +96,11 @@ passport.use(
 			secretOrKey: JWT_SECRET,
 			passReqToCallback: true
 		},
-		async function(req: Request, jwtPayload: any, done: VerifiedCallback) {
+		async function(req: Request, jwtPayload: IJwtPayload, done: VerifiedCallback) {
 			try {
 				const user = await User.findByPayload(jwtPayload);
 				if (user) {
-					// TODO: refactor to middleware
-					return done(null, user);
+					return done(null, user, { jwtPayload });
 				}
 				return done(null, false);
 			} catch (error) {
