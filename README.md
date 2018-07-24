@@ -38,8 +38,8 @@ The plugin requires a few configurations in `system.config.yml`.
 
 ```yaml
 plugins:
-  express-gateway-plugin-cas:
-    package: '../dist/manifest.js'
+  cas:
+    package: express-gateway-plugin-cas
     DATABASE_URL: 'postgres://username:password@localhost:5432/db_name'
 ```
 |Name|Description|Default|Require|
