@@ -1,6 +1,6 @@
 declare namespace ExpressGateway {
 	interface Plugin {
-		option?: any;
+		options?: any;
 	}
 
 	interface PluginContext {

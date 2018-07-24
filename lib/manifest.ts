@@ -51,7 +51,7 @@ const plugin: ExpressGateway.Plugin = {
 		},
 		required: ['DATABASE_URL']
 	},
-	option: {
+	options: {
 		DATABASE_URL: {
 			title: "User's database url",
 			type: 'string',
