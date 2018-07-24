@@ -64,6 +64,10 @@ class User extends Model<User> {
 
 	@Column public lastname!: string;
 
+	@Column public email!: string;
+
+	@Column public phoneNumber!: string;
+
 	public comparePassword(password: string) {
 		return bcrypt.compare(password, this.password);
 	}
