@@ -16,9 +16,9 @@ export let DATABASE_URL = 'postgres://postgres:password@localhost:5432/postgres'
 
 export let AUTH_HEADER = 'auth-user';
 
-export let ADMIN_KEY = 'this_is_an_admin_api_key';
+export let ADMIN_KEY = 'admin_key';
 
-export let JWT_SECRET = 'this_is_a_secret';
+export let JWT_SECRET = 'jwt_secret';
 
 export let JWT_EXPIRATION_DELTA = null;
 
