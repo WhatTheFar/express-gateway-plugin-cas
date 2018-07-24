@@ -5,5 +5,7 @@ db:
     namespace: EG
 
 plugins:
-  eg-auth-plugin:
+  express-gateway-plugin-cas:
     package: '../dist/manifest.js'
+    param1: 'param from system'
+
