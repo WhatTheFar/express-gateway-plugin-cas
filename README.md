@@ -13,7 +13,7 @@ eg plugin install express-gateway-plugin-cas
 ## Quick start
 
 1.  Make sure the plugin is listed in [system.config.yml file](https://www.express-gateway.io/docs/configuration/system.config.yml/).
-    This is done automatically for you if you used the command above.
+    This is done automatically for you if you used the command above. See [Configuration](#configuration) for more details.
 
 2.  Add the configuration keys to [gateway.config.yml file](https://www.express-gateway.io/docs/configuration/gateway.config.yml/).
 
@@ -32,20 +32,24 @@ policies:
           passThroughSafeMethod: true
 ```
 
-3. Add
-environment-specific variables on your Express-Gateway project. See [`.env.example`](https://github.com/WhatTheFar/express-gateway-plugin-cas/blob/master/.env.example) for all required variables, also [Configuration](#configuration) for more details
-
 ### Configuration
 
-The plugin requires few environment variables.
+The plugin requires a few configurations in `system.config.yml`.
 
-#### Using .env file
-Create a `.env` file in the root directory of your project. Add
-environment-specific variables on new lines in the form of `NAME=VALUE`.
-
-See [`.env.example`](https://github.com/thinc-org/elma-server/blob/master/.env.example) for example.
-
-If you are using docker-compose, see also [Environment file](https://docs.docker.com/compose/env-file/), [Environment variables in Compose](https://docs.docker.com/compose/environment-variables/)
+```yaml
+plugins:
+  express-gateway-plugin-cas:
+    package: '../dist/manifest.js'
+    DATABASE_URL: 'postgres://username:password@localhost:5432/db_name'
+```
+|Name|Description|Default|Require|
+|----|-----------|:-----:|:-----:|
+|DATABASE_URL|[PostgreSQL Connection Url](https://www.postgresql.org/docs/current/static/libpq-connect.html#LIBPQ-CONNSTRING)|-|Yes|
+|AUTH_HEADER|a header for authenticated username|auth-user|-|
+|ADMIN_KEY|custom api key, used for admin api authorisation|admin_key|-|
+|JWT_SECRET|a string used to sign and verify jwt|jwt_secret|-|
+|JWT_EXPIRATION_DELTA|TBD|-|-|
+|JWT_REFRESH_EXPIRATION_DELTA|TBD|-|-|
 
 ### Policies
 
