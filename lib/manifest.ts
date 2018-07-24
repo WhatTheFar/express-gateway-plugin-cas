@@ -1,4 +1,5 @@
 import 'express-gateway';
+import { initConfig } from './config';
 import { initDatabase } from './config/db';
 import authSecurePolicy from './policies/auth-secure-policy';
 import basicPolicy from './policies/basic-auth-policy';
@@ -12,6 +13,7 @@ import googleOauth20Routes from './routes/google-oauth20-eg';
 const plugin: ExpressGateway.Plugin = {
 	version: '1.3.0',
 	init: pluginContext => {
+		initConfig(pluginContext.settings);
 		initDatabase();
 
 		pluginContext.registerPolicy(authSecurePolicy);
@@ -28,11 +30,33 @@ const plugin: ExpressGateway.Plugin = {
 		$id: 'http://express-gateway.io/schemas/plugin/express-gateway-plugin-cas.json',
 		type: 'object',
 		properties: {
-			param1: {
+			DATABASE_URL: {
+				type: 'string'
+			},
+			AUTH_HEADER: {
+				type: 'string'
+			},
+			ADMIN_KEY: {
+				type: 'string'
+			},
+			JWT_SECRET: {
+				type: 'string'
+			},
+			JWT_EXPIRATION_DELTA: {
+				type: 'string'
+			},
+			JWT_REFRESH_EXPIRATION_DELTA: {
 				type: 'string'
 			}
 		},
-		required: ['param1']
+		required: ['DATABASE_URL']
+	},
+	option: {
+		DATABASE_URL: {
+			title: "User's database url",
+			type: 'string',
+			required: true
+		}
 	}
 };
 
