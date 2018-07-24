@@ -45,7 +45,7 @@ environment-specific variables on new lines in the form of `NAME=VALUE`.
 
 See [`.env.example`](https://github.com/thinc-org/elma-server/blob/master/.env.example) for example.
 
-If you are using docker-conpose, see also [Environment variables in Compose](https://docs.docker.com/compose/environment-variables/)
+If you are using docker-compose, see also [Environment file](https://docs.docker.com/compose/env-file/), [Environment variables in Compose](https://docs.docker.com/compose/environment-variables/)
 
 ### Policies
 
