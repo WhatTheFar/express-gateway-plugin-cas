@@ -48,8 +48,10 @@ plugins:
 |AUTH_HEADER|a header for authenticated username|auth-user|-|
 |ADMIN_KEY|custom api key, used for admin api authorisation|admin_key|-|
 |JWT_SECRET|a string used to sign and verify jwt|jwt_secret|-|
-|JWT_EXPIRATION_DELTA|TBD|-|-|
-|JWT_REFRESH_EXPIRATION_DELTA|TBD|-|-|
+|JWT_EXPIRATION_DELTA|This will be used to set the jwt expiration time.|null|-|
+|JWT_REFRESH_EXPIRATION_DELTA|This is how much time after the original token that future tokens can be refreshed from.|null|-|
+
+**Note:** `JWT_EXPIRATION_DELTA`, `JWT_REFRESH_EXPIRATION_DELTA` are strings describing a time span [zeit/ms](https://github.com/zeit/ms). Eg: "2 days", "10h", "7d". A string must provide the time units (days, hours, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
 
 ### Policies
 
