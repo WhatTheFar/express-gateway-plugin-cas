@@ -53,7 +53,10 @@ export default (gatewayExpressApp: Application) => {
 				});
 				return res.json(user);
 			} catch (error) {
-				return ResponseUtil.sendDuplicateKeyError(res, 'Username is invalid');
+				if (error.name === 'SequelizeUniqueConstraintError') {
+					return ResponseUtil.sendDuplicateKeyError(res, 'Username is invalid');
+				}
+				return ResponseUtil.sendValidationError(res, error.errors);
 			}
 		})
 	);
