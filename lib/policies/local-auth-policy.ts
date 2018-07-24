@@ -14,7 +14,7 @@ const policy: ExpressGateway.Policy = {
 		};
 	},
 	schema: {
-		$id: 'http://express-gateway.io/schemas/policies/session-auth.json',
+		$id: 'http://express-gateway.io/schemas/policies/local-auth.json',
 		type: 'object',
 		properties: {
 			passThrough: { type: 'boolean', default: false },

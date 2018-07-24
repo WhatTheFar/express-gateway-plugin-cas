@@ -5,14 +5,17 @@ const policy: ExpressGateway.Policy = {
 	name: 'auth-secure',
 	policy: actionParams => {
 		return (req, res, next) => {
+			console.log(actionParams);
 			delete req.headers[AUTH_HEADER];
 			next();
 		};
 	},
 	schema: {
-		$id: 'http://express-gateway.io/schemas/policies/session-auth.json',
+		$id: 'http://express-gateway.io/schemas/policies/auth-secure.json',
 		type: 'object',
-		properties: {}
+		properties: {
+			test: { type: 'array'}
+		}
 	}
 };
 
