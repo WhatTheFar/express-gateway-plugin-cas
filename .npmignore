@@ -11,6 +11,9 @@ jest.config.js
 .prettierrc
 .env.example
 
+# vscode
+.vscode
+
 # Logs
 logs
 *.log
