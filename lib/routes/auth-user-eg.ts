@@ -1,13 +1,17 @@
 import { Application } from 'express-serve-static-core';
 import { apiKeyAuthorize } from '../middleware/authentication';
 import User from '../models/user-model';
-import { jsonMiddleware } from './../middleware';
+import { corsMiddleware, jsonMiddleware } from './../middleware';
 import { asyncifyHandler } from './../utils/async-handler';
 import { ResponseUtil } from './../utils/response-util';
 
 export default (gatewayExpressApp: Application) => {
+	gatewayExpressApp.options('/auth/user', corsMiddleware);
+	gatewayExpressApp.options('/auth/user/*', corsMiddleware);
+
 	gatewayExpressApp.get(
 		'/auth/user',
+		corsMiddleware,
 		apiKeyAuthorize,
 		asyncifyHandler(async (req, res, next) => {
 			try {
@@ -21,6 +25,7 @@ export default (gatewayExpressApp: Application) => {
 
 	gatewayExpressApp.get(
 		'/auth/user/:username',
+		corsMiddleware,
 		apiKeyAuthorize,
 		asyncifyHandler(async (req, res, next) => {
 			const username = req.params.username;
@@ -38,6 +43,7 @@ export default (gatewayExpressApp: Application) => {
 
 	gatewayExpressApp.post(
 		'/auth/user',
+		corsMiddleware,
 		jsonMiddleware,
 		apiKeyAuthorize,
 		asyncifyHandler(async (req, res, next) => {
@@ -54,6 +60,7 @@ export default (gatewayExpressApp: Application) => {
 
 	gatewayExpressApp.delete(
 		'/auth/user/:username',
+		corsMiddleware,
 		apiKeyAuthorize,
 		asyncifyHandler(async (req, res, next) => {
 			const row = await User.destroy({ where: { username: req.params.username } });
