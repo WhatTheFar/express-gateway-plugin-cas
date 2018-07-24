@@ -13,7 +13,7 @@ const policy: ExpressGateway.Policy = {
 		$id: 'http://express-gateway.io/schemas/policies/auth-secure.json',
 		type: 'object',
 		properties: {
-			test: { type: 'array'}
+			test: { type: 'array' }
 		}
 	}
 };
