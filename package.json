@@ -1,6 +1,6 @@
 {
 	"name": "express-gateway-plugin-cas",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Authentication plugin for Express Gateway",
 	"main": "./dist/manifest.js",
 	"types": "./dist/manifest.d.ts",
