@@ -3,7 +3,6 @@ import * as _ from 'lodash';
 import { SAFE_METHOD } from '../config/constant';
 import User from '../models/user-model';
 import { setReqAuthUser } from '../utils/request-util';
-import { IJwtPayload } from './../models/user-model';
 import { getReqAuthUser } from './request-util';
 import { ResponseUtil } from './response-util';
 

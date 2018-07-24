@@ -6,7 +6,6 @@ const policy: ExpressGateway.Policy = {
 	name: 'jwt-auth',
 	policy: actionParams => {
 		return (req, res, next) => {
-			// TODO: add custom callback
 			passport.authenticate(
 				'jwt-plugin',
 				{ session: false },

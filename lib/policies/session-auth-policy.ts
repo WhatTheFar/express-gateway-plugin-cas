@@ -1,8 +1,6 @@
 import 'express-gateway';
 import User from '../models/user-model';
 import invokeMiddleware from '../utils/invokeMiddleware';
-import { setReqAuthUser } from '../utils/request-util';
-import { ResponseUtil } from '../utils/response-util';
 import { passportMiddlewares } from './../middleware';
 import { getCommonAuthCallback } from './../utils/passport-util';
 
