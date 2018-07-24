@@ -7,5 +7,7 @@ db:
 plugins:
   express-gateway-plugin-cas:
     package: '../dist/manifest.js'
-    DATABASE_URL: 'postgres://postgres:password@localhost:5432/postgres'
-    AUTH_HEADER: 'auth-user'
+    DATABASE_URL: ${DATABASE_URL:-}
+    ADMIN_KEY: ${ADMIN_KEY:-}
+    # JWT_EXPIRATION_DELTA: '10s'
+    # JWT_REFRESH_EXPIRATION_DELTA: '20s'
