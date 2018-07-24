@@ -23,7 +23,17 @@ const plugin: ExpressGateway.Plugin = {
 		pluginContext.registerGatewayRoute(authUserRoutes);
 		pluginContext.registerGatewayRoute(googleOauth20Routes);
 	},
-	policies: ['auth-secure', 'jwt-auth', 'session-auth', 'local-auth']
+	policies: ['auth-secure', 'jwt-auth', 'session-auth', 'local-auth'],
+	schema: {
+		$id: 'http://express-gateway.io/schemas/plugin/express-gateway-plugin-cas.json',
+		type: 'object',
+		properties: {
+			param1: {
+				type: 'string'
+			}
+		},
+		required: ['param1']
+	}
 };
 
 export = plugin;
