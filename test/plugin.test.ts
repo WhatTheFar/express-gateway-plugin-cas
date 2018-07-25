@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import * as dotenv from 'dotenv';
 import { Server } from 'http';
-import { ADMIN_KEY, AUTH_HEADER, initConfig } from './../lib/config/index';
+import { ADMIN_KEY, AUTH_HEADER, initConfig } from '../lib/config';
 import app from './app';
 
 let Application: Server;
