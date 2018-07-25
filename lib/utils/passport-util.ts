@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express-serve-static-core';
 import * as _ from 'lodash';
 import { SAFE_METHOD } from '../config/constant';
-import User from '../models/user-model';
 import { setReqAuthUser } from '../utils/request-util';
 import { getReqAuthUser } from './request-util';
 import { ResponseUtil } from './response-util';
+import { generateAuthToken } from './user-util';
 
 export const getCommonAuthCallback = (
 	actionParams: any,
@@ -12,7 +12,7 @@ export const getCommonAuthCallback = (
 	res: Response,
 	next: NextFunction
 ) => {
-	return (err: any, user: User, info: any) => {
+	return (err: any, user: UserInstance, info: any) => {
 		if (user) {
 			setReqAuthUser(req, user);
 			return next();
@@ -45,12 +45,12 @@ export const getRefreshTokenCallback = (
 	res: Response,
 	next: NextFunction
 ) => {
-	return (err: any, user: User, info: any) => {
+	return (err: any, user: UserInstance, info: any) => {
 		if (err) {
 			return next(err);
 		}
 		if (info.jwtPayload) {
-			const token = user.generateAuthToken(info.jwtPayload.expiresIn);
+			const token = generateAuthToken(user, info.jwtPayload.expiresIn);
 			if (!token) {
 				// Refresh is expired
 				return ResponseUtil.sendRefreshExpiredError(res);

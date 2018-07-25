@@ -9,5 +9,6 @@ plugins:
     package: '../dist/manifest.js'
     DATABASE_URL: ${DATABASE_URL:-}
     ADMIN_KEY: ${ADMIN_KEY:-}
+    # USER_MODEL_PATH: './test/user-model.js'
     # JWT_EXPIRATION_DELTA: '10s'
     # JWT_REFRESH_EXPIRATION_DELTA: '20s'

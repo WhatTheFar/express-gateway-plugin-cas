@@ -1,6 +1,6 @@
 import { Application } from 'express-serve-static-core';
 import { apiKeyAuthorize } from '../middleware/authentication';
-import User from '../models/user-model';
+import { User } from '../models/user-model';
 import { corsMiddleware, jsonMiddleware } from './../middleware';
 import { asyncifyHandler } from './../utils/async-handler';
 import { ResponseUtil } from './../utils/response-util';

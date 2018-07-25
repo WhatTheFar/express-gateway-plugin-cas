@@ -1,6 +1,5 @@
 import { Application, NextFunction, Request, Response } from 'express-serve-static-core';
 import passport from '../config/passport';
-import User from '../models/user-model';
 import {
 	corsMiddleware,
 	jsonMiddleware,
@@ -9,6 +8,7 @@ import {
 	urlencodedMiddleware
 } from './../middleware';
 import { getRefreshTokenCallback } from './../utils/passport-util';
+import { generateAuthToken } from './../utils/user-util';
 
 export default (gatewayExpressApp: Application) => {
 	gatewayExpressApp.options('/auth/token', corsMiddleware);
@@ -19,9 +19,9 @@ export default (gatewayExpressApp: Application) => {
 		'/auth/token',
 		corsMiddleware,
 		passport.authenticate('basic-plugin', { session: false }),
-		(req, res, next) => {
-			const user = req.user as User;
-			const token = user.generateAuthToken();
+		(req: Request, res: Response, next: NextFunction) => {
+			const user = req.user as UserInstance;
+			const token = generateAuthToken(user);
 			res.json({ token });
 		}
 	);
@@ -33,8 +33,8 @@ export default (gatewayExpressApp: Application) => {
 		urlencodedMiddleware,
 		passport.authenticate('local-plugin', { session: false }),
 		(req: Request, res: Response, next: NextFunction) => {
-			const user = req.user as User;
-			const token = user.generateAuthToken();
+			const user = req.user as UserInstance;
+			const token = generateAuthToken(user);
 			res.json({ token });
 		}
 	);

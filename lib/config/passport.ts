@@ -5,9 +5,10 @@ import { BasicStrategy } from 'passport-http';
 import { ExtractJwt, Strategy as JwtStrategy, VerifiedCallback } from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { JWT_SECRET } from '.';
-import User, { IJwtPayload } from '../models/user-model';
+import { User } from '../models/user-model';
+import { comparePassword, findUserByPayload } from './../utils/user-util';
 
-passport.serializeUser((user: User, done) => {
+passport.serializeUser((user: UserInstance, done) => {
 	return done(null, user.id);
 });
 
@@ -29,7 +30,7 @@ passport.use(
 			if (!user) {
 				return done(null, false, { message: 'Incorrect username.' });
 			}
-			const isValid = await user.comparePassword(password);
+			const isValid = await comparePassword(user, password);
 			if (!isValid) {
 				return done(null, false, { message: 'Incorrect password.' });
 			}
@@ -48,7 +49,7 @@ passport.use(
 			if (!user) {
 				return done(null, false);
 			}
-			const isValid = await user.comparePassword(password);
+			const isValid = await comparePassword(user, password);
 			if (!isValid) {
 				return done(null, false);
 			}
@@ -98,7 +99,7 @@ passport.use(
 		},
 		async function(req: Request, jwtPayload: IJwtPayload, done: VerifiedCallback) {
 			try {
-				const user = await User.findByPayload(jwtPayload);
+				const user = await findUserByPayload(jwtPayload);
 				if (user) {
 					return done(null, user, { jwtPayload });
 				}

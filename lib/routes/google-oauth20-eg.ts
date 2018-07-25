@@ -1,8 +1,8 @@
 import { Request, Response } from 'express-serve-static-core';
 import { Application } from 'express-serve-static-core';
 import passport from '../config/passport';
-import User from '../models/user-model';
 import { passportMiddlewares } from './../middleware';
+import { generateAuthToken } from './../utils/user-util';
 
 export default (gatewayExpressApp: Application) => {
 	gatewayExpressApp.get(
@@ -15,8 +15,8 @@ export default (gatewayExpressApp: Application) => {
 		passportMiddlewares,
 		passport.authenticate('google-plugin', { failureRedirect: '/auth/google' }),
 		(req: Request, res: Response) => {
-			const user = req.user as User;
-			const token = user.generateAuthToken();
+			const user = req.user as UserInstance;
+			const token = generateAuthToken(user);
 			res.json({ token });
 		}
 	);

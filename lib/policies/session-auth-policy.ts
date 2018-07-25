@@ -1,5 +1,4 @@
 import 'express-gateway';
-import User from '../models/user-model';
 import invokeMiddleware from '../utils/invokeMiddleware';
 import { passportMiddlewares } from './../middleware';
 import { getCommonAuthCallback } from './../utils/passport-util';
@@ -10,7 +9,7 @@ const policy: ExpressGateway.Policy = {
 		return (req, res, next) => {
 			invokeMiddleware(passportMiddlewares, req, res)
 				.then(() => {
-					const user = req.user as User;
+					const user = req.user as UserInstance;
 					return getCommonAuthCallback(actionParams, req, res, next)(
 						null,
 						user,
