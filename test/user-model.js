@@ -16,27 +16,17 @@ const defineFunction = (sequelize, Datatypes) => {
 		phoneNumber: { type: Datatypes.STRING },
 		faIdPrefix: { type: Datatypes.STRING }
 	};
-	return sequelize.define(
-		'users',
-		{
-			username: { type: Datatypes.STRING, allowNull: true, unique: true },
-			password: { type: Datatypes.STRING, allowNull: false },
-			firstname: { type: Datatypes.STRING },
-			lastname: { type: Datatypes.STRING },
-			email: { type: Datatypes.STRING },
-			phoneNumber: { type: Datatypes.STRING },
-			fa_id_prefix: { type: Datatypes.STRING }
-		},
-		{
-			hooks: {
-				afterCreate: (user, options) => {
-					const faId = _.padStart(user.id, 5, '0');
-					user.username = `${user.faIdPrefix}${faId}`;
-					return user.save();
-				}
+	return sequelize.define('users', attributes, {
+		hooks: {
+			afterCreate: (user, options) => {
+				const faId = _.padStart(user.id, 5, '0');
+				user.username = `${user.faIdPrefix}${faId}`;
+				return user.save();
 			}
 		}
-	);
+	});
 };
 
 module.exports = defineFunction;
+
+// Datatypes Reference: http://docs.sequelizejs.com/variable/index.html#static-variable-DataTypes
