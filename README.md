@@ -50,6 +50,7 @@ plugins:
 |JWT_SECRET|a string used to sign and verify jwt|jwt_secret|-|
 |JWT_EXPIRATION_DELTA|This will be used to set the jwt expiration time.|null|-|
 |JWT_REFRESH_EXPIRATION_DELTA|This is how much time after the original token that future tokens can be refreshed from.|null|-|
+|USER_MODEL_PATH|path to sequelize model definition for a [custom user model](#customization)|null|-|
 
 **Note:** `JWT_EXPIRATION_DELTA`, `JWT_REFRESH_EXPIRATION_DELTA` are strings describing a time span [zeit/ms](https://github.com/zeit/ms). Eg: "2 days", "10h", "7d". A string must provide the time units (days, hours, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
 
@@ -81,9 +82,26 @@ plugins:
 
 **Note:** if you provide both actions, the `action.passThrough` has a higher priority.
 
-### Example
+## Customization
+
+### User model
+
+The plugin can import a custom model definition for User's table by providing a path to the exported model, otherwise it would use a default model.
+
+We're using [Sequelize](http://docs.sequelizejs.com/) ORM to connect to the SQL database, which support [importing model definitions](http://docs.sequelizejs.com/manual/tutorial/models-definition.html#import) from a file. So, you can customize new model by using [Sequelize model definition](http://docs.sequelizejs.com/manual/tutorial/models-definition.html).
+ And make sure that `USER_MODEL_PATH` has been set to your custom model in `system.config.yml` file.
+
+**The username and password field are required in custom model for authentication stuff. For security, there is a built-in password hashing feature. The password will be hashed automatically without extra configuration in your custom model.**
+
+For example, see [`custom-user-model.js`](https://gist.github.com/WhatTheFar/a8f26d692ea758ea06238eb1d7f3bc86).
+
+**Note:** a path is relative to root project directory.
+
+## Example
 
 [drf-with-eg-cas](https://github.com/WhatTheFar/drf-with-eg-cas-example) is an example usecase of this plugin on top [Express gateway](https://www.express-gateway.io/) and [Django REST framework](http://www.django-rest-framework.org/) api
+
+---
 
 ### Detailed documentation:
 
