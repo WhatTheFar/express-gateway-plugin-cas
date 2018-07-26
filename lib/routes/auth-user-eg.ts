@@ -4,6 +4,7 @@ import { User } from '../models/user-model';
 import { corsMiddleware, jsonMiddleware } from './../middleware';
 import { asyncifyHandler } from './../utils/async-handler';
 import { ResponseUtil } from './../utils/response-util';
+import { getUserView, getUserViews } from './../utils/user-util';
 
 export default (gatewayExpressApp: Application) => {
 	gatewayExpressApp.options('/auth/user', corsMiddleware);
@@ -16,7 +17,7 @@ export default (gatewayExpressApp: Application) => {
 		asyncifyHandler(async (req, res, next) => {
 			try {
 				const users = await User.findAll();
-				return res.json(users);
+				return res.json(getUserViews(users));
 			} catch (error) {
 				next(error);
 			}
@@ -34,7 +35,7 @@ export default (gatewayExpressApp: Application) => {
 				if (!user) {
 					return ResponseUtil.sendInvalidId(res);
 				}
-				return res.json(user);
+				return res.json(getUserView(user));
 			} catch (error) {
 				next(error);
 			}
@@ -51,7 +52,7 @@ export default (gatewayExpressApp: Application) => {
 				const user = await User.create({
 					...req.body
 				});
-				return res.json(user);
+				return res.json(getUserView(user));
 			} catch (error) {
 				if (error.name === 'SequelizeUniqueConstraintError') {
 					return ResponseUtil.sendDuplicateKeyError(res, 'Username is invalid');

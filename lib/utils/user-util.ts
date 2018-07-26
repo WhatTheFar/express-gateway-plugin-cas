@@ -5,6 +5,18 @@ import { JWT_SECRET } from '../config';
 import { JWT_EXPIRATION_DELTA, JWT_REFRESH_EXPIRATION_DELTA } from './../config/index';
 import { User } from './../models/user-model';
 
+export const getUserView = (user: UserInstance) => {
+	const userView: IUserAttributes = user.toJSON();
+	delete userView.password;
+	return userView;
+};
+
+export const getUserViews = (users: UserInstance[]) => {
+	return users.map(user => {
+		return getUserView(user);
+	});
+};
+
 export const findUserByPayload = async (payload: IJwtPayload) => {
 	const user = await User.findOne({
 		where: { username: payload.username }

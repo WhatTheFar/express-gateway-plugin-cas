@@ -8,7 +8,7 @@ import {
 	urlencodedMiddleware
 } from './../middleware';
 import { getRefreshTokenCallback } from './../utils/passport-util';
-import { generateAuthToken } from './../utils/user-util';
+import { generateAuthToken, getUserView } from './../utils/user-util';
 
 export default (gatewayExpressApp: Application) => {
 	gatewayExpressApp.options('/auth/token', corsMiddleware);
@@ -22,7 +22,7 @@ export default (gatewayExpressApp: Application) => {
 		(req: Request, res: Response, next: NextFunction) => {
 			const user = req.user as UserInstance;
 			const token = generateAuthToken(user);
-			res.json({ ...token, user });
+			res.json({ ...token, user: getUserView(user) });
 		}
 	);
 
@@ -35,7 +35,7 @@ export default (gatewayExpressApp: Application) => {
 		(req: Request, res: Response, next: NextFunction) => {
 			const user = req.user as UserInstance;
 			const token = generateAuthToken(user);
-			res.json({ ...token, user });
+			res.json({ ...token, user: getUserView(user) });
 		}
 	);
 
