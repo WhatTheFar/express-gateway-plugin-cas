@@ -20,11 +20,16 @@ export const initUserModel = (
 		};
 		UserModel = sequelize.define<UserInstance, IUserAttributes>('users', attributes);
 	}
-	UserModel.beforeCreate(user => {
+	UserModel.beforeUpdate(hashUserPassword);
+	UserModel.beforeCreate(hashUserPassword);
+	User = UserModel;
+	return UserModel;
+};
+
+const hashUserPassword = (user: UserInstance) => {
+	if (user.changed('password')) {
 		return hashPassword(user.password).then(hashed => {
 			user.password = hashed;
 		});
-	});
-	User = UserModel;
-	return UserModel;
+	}
 };

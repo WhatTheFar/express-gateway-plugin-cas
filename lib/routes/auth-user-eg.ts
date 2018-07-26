@@ -55,7 +55,36 @@ export default (gatewayExpressApp: Application) => {
 				return res.json(getUserView(user));
 			} catch (error) {
 				if (error.name === 'SequelizeUniqueConstraintError') {
-					return ResponseUtil.sendDuplicateKeyError(res, 'Username is invalid');
+					return ResponseUtil.sendDuplicateKeyError(
+						res,
+						'Unique column is duplicated.'
+					);
+				}
+				return ResponseUtil.sendValidationError(res, error.errors);
+			}
+		})
+	);
+
+	gatewayExpressApp.put(
+		'/auth/user/:username',
+		corsMiddleware,
+		jsonMiddleware,
+		apiKeyAuthorize,
+		asyncifyHandler(async (req, res, next) => {
+			const username = req.params.username;
+			try {
+				const user = await User.findOne({ where: { username } });
+				if (!user) {
+					return ResponseUtil.sendInvalidId(res);
+				}
+				const updatedUser = await user.update({ ...req.body });
+				return res.json(getUserView(updatedUser));
+			} catch (error) {
+				if (error.name === 'SequelizeUniqueConstraintError') {
+					return ResponseUtil.sendDuplicateKeyError(
+						res,
+						'Unique column is duplicated.'
+					);
 				}
 				return ResponseUtil.sendValidationError(res, error.errors);
 			}
