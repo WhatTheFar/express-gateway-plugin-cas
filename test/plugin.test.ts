@@ -71,15 +71,57 @@ describe('User routes', () => {
 		username: 'test2',
 		password: 'password123'
 	};
+	test('should get users', async () => {
+		expect.assertions(1);
+		const { status } = await axiosInstance.get('/auth/user', {
+			headers: apiKeyAuthHeader
+		});
+		expect(status).toBe(200);
+	});
+
+	test('should get a test user', async () => {
+		expect.assertions(2);
+		const { status, data } = await axiosInstance.get(`/auth/user/${username}`, {
+			headers: apiKeyAuthHeader
+		});
+		expect(status).toBe(200);
+		expect(data.username).toBe(username);
+	});
+
 	test('should create test user', async () => {
-		// expect.assertions(1);
+		expect.assertions(1);
 		const { data } = await axiosInstance.post('/auth/user', testCredential, {
 			headers: apiKeyAuthHeader
 		});
 		expect(data.username).toBe(testCredential.username);
 	});
+
+	test('should update test user', async () => {
+		expect.assertions(2);
+		const newPassword = 'password456';
+		await axiosInstance.put(
+			`/auth/user/${testCredential.username}`,
+			{
+				password: newPassword
+			},
+			{
+				headers: apiKeyAuthHeader
+			}
+		);
+		await expect(
+			axiosInstance.post('/auth/token', testCredential)
+		).rejects.toThrowError();
+
+		await expect(
+			axiosInstance.post('/auth/token', {
+				...testCredential,
+				password: newPassword
+			})
+		).resolves.toHaveProperty('data.token');
+	});
+
 	test('should delete test user', async () => {
-		// expect.assertions(1);
+		expect.assertions(1);
 		const { status } = await axiosInstance.delete(
 			`/auth/user/${testCredential.username}`,
 			{
