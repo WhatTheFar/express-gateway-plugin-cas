@@ -23,6 +23,7 @@ export const generateAuthToken = (
 		username: user.username,
 		password: user.password
 	};
+	const tokenContainer: any = {};
 	if (refreshExpiresIn) {
 		if (refreshExpiresIn < Date.now()) {
 			return null;
@@ -34,8 +35,10 @@ export const generateAuthToken = (
 	const options: any = {};
 	if (JWT_EXPIRATION_DELTA) {
 		options.expiresIn = JWT_EXPIRATION_DELTA;
+		tokenContainer.expiresIn = new Date(Date.now() + ms(JWT_EXPIRATION_DELTA));
 	}
-	return jwt.sign(payload, JWT_SECRET, options);
+	tokenContainer.token = jwt.sign(payload, JWT_SECRET, options);
+	return tokenContainer;
 };
 
 export const hashPassword = async (password: string) => {

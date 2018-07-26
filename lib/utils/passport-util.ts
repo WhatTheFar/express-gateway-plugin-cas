@@ -55,7 +55,7 @@ export const getRefreshTokenCallback = (
 				// Refresh is expired
 				return ResponseUtil.sendRefreshExpiredError(res);
 			}
-			return res.json({ token });
+			return res.json({ ...token });
 		}
 		// Handle TokenExpiredError
 		if (info && info.name === 'TokenExpiredError') {

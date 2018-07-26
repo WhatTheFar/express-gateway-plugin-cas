@@ -22,7 +22,7 @@ export default (gatewayExpressApp: Application) => {
 		(req: Request, res: Response, next: NextFunction) => {
 			const user = req.user as UserInstance;
 			const token = generateAuthToken(user);
-			res.json({ token });
+			res.json({ ...token, user });
 		}
 	);
 
@@ -35,7 +35,7 @@ export default (gatewayExpressApp: Application) => {
 		(req: Request, res: Response, next: NextFunction) => {
 			const user = req.user as UserInstance;
 			const token = generateAuthToken(user);
-			res.json({ token });
+			res.json({ ...token, user });
 		}
 	);
 
