@@ -12,6 +12,7 @@ import { generateAuthToken, getUserView } from './../utils/user-util';
 
 export default (gatewayExpressApp: Application) => {
 	gatewayExpressApp.options('/auth/token', corsMiddleware);
+	gatewayExpressApp.options('/auth/refresh', corsMiddleware);
 	gatewayExpressApp.options('/auth/login', corsMiddleware);
 	gatewayExpressApp.options('/auth/logout', corsMiddleware);
 
