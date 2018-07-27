@@ -5,6 +5,7 @@ export let JWT_SECRET;
 export let JWT_EXPIRATION_DELTA;
 export let JWT_REFRESH_EXPIRATION_DELTA;
 export let USER_MODEL_PATH;
+export let CORS_ORIGIN;
 
 export const initConfig = (settings: any) => {
 	DATABASE_URL = settings.DATABASE_URL;
@@ -15,4 +16,5 @@ export const initConfig = (settings: any) => {
 	JWT_REFRESH_EXPIRATION_DELTA = settings.JWT_REFRESH_EXPIRATION_DELTA;
 	USER_MODEL_PATH = settings.USER_MODEL_PATH;
 
+	CORS_ORIGIN = settings.CORS_ORIGIN;
 };

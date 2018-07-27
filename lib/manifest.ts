@@ -57,6 +57,11 @@ const plugin: ExpressGateway.Plugin = {
 			},
 			USER_MODEL_PATH: {
 				type: 'string'
+			},
+			CORS_ORIGIN: {
+				type: ['string', 'boolean', 'array'],
+				items: { type: 'string' },
+				default: '*'
 			}
 		},
 		required: ['DATABASE_URL']
