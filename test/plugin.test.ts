@@ -1,69 +1,21 @@
-import axios, { AxiosInstance } from 'axios';
-import * as dotenv from 'dotenv';
-import { Server } from 'http';
-import { ADMIN_KEY, AUTH_HEADER, initConfig } from '../lib/config';
-import app from './app';
-
-let Application: Server;
-let axiosInstance: AxiosInstance;
-const username = 'test';
-const password = 'password123';
-const credential = {
-	username,
-	password
-};
-
-let apiKeyAuthHeader: any;
-let jwtAuthHeader: any;
-const basicAuthOption: any = {
-	auth: credential
-};
-
-const setApiKeyAuthHeader = (apiKey: string) => {
-	apiKeyAuthHeader = {
-		Authorization: `apiKey ${apiKey}`
-	};
-};
-const setJwtHeader = (token: string) => {
-	jwtAuthHeader = {
-		Authorization: `Bearer ${token}`
-	};
-};
+import { AUTH_HEADER } from '../lib/config';
+import {
+	apiKeyAuthHeader,
+	axiosInstance,
+	basicAuthOption,
+	credential,
+	disposeTestConfig,
+	initTestConfig,
+	jwtAuthHeader,
+	username
+} from './config';
 
 beforeAll(async done => {
-	dotenv.config();
-	initConfig(process.env);
-
-	axiosInstance = axios.create({
-		baseURL: 'http://localhost:8080/',
-		validateStatus: status => status < 400
-	});
-
-	setApiKeyAuthHeader(ADMIN_KEY);
-	try {
-		await axiosInstance.post('/auth/user', credential, {
-			headers: apiKeyAuthHeader
-		});
-	} catch (error) {
-		console.log();
-	}
-
-	try {
-		const {
-			data: { token }
-		} = await axiosInstance.post('/auth/token', credential);
-		setJwtHeader(token);
-	} catch (error) {
-		console.log();
-	}
-
-	Application = app.listen(8081, done);
+	initTestConfig(done);
 });
 
 afterAll(done => {
-	if (Application) {
-		Application.close(done);
-	}
+	disposeTestConfig(done);
 });
 
 describe('User routes', () => {
