@@ -1,11 +1,12 @@
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
+import { RequestHandler } from 'express-serve-static-core';
 import * as session from 'express-session';
 import * as passport from 'passport';
 
 const json = bodyParser.json();
 const urlencoded = bodyParser.urlencoded({ extended: false });
-export const passportMiddlewares = [
+export const passportMiddlewares: RequestHandler[] = [
 	session({
 		secret: 'session_secret',
 		resave: false,
@@ -15,7 +16,10 @@ export const passportMiddlewares = [
 	passport.session()
 ];
 
-export const jsonMiddleware: any[] = [json];
-export const urlencodedMiddleware: any[] = [urlencoded];
-export const corsMiddleware: any[] = [cors()];
-export const middlewares: any[] = [json, urlencoded, ...passportMiddlewares];
+export const jsonMiddleware: RequestHandler[] = [json];
+export const urlencodedMiddleware: RequestHandler[] = [urlencoded];
+export let corsMiddleware: RequestHandler = cors();
+export const middlewares: RequestHandler[] = [json, urlencoded, ...passportMiddlewares];
+
+export const initMiddleware = () => {
+};

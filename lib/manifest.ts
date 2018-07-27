@@ -1,6 +1,8 @@
+import { initPassport } from './config/passport';
 import 'express-gateway';
 import { initConfig } from './config';
 import { initDatabase } from './config/db';
+import { initMiddleware } from './middleware/index';
 import authSecurePolicy from './policies/auth-secure-policy';
 import basicPolicy from './policies/basic-auth-policy';
 import jwtPolicy from './policies/jwt-auth-policy';
@@ -15,6 +17,8 @@ const plugin: ExpressGateway.Plugin = {
 	init: pluginContext => {
 		initConfig(pluginContext.settings);
 		initDatabase();
+		initPassport();
+		initMiddleware();
 
 		pluginContext.registerPolicy(authSecurePolicy);
 		pluginContext.registerPolicy(jwtPolicy);
@@ -34,18 +38,24 @@ const plugin: ExpressGateway.Plugin = {
 				type: 'string'
 			},
 			AUTH_HEADER: {
-				type: 'string'
+				type: 'string',
+				default: 'auth-user'
 			},
 			ADMIN_KEY: {
-				type: 'string'
+				type: 'string',
+				default: 'admin_key'
 			},
 			JWT_SECRET: {
-				type: 'string'
+				type: 'string',
+				default: 'jwt_secret'
 			},
 			JWT_EXPIRATION_DELTA: {
 				type: 'string'
 			},
 			JWT_REFRESH_EXPIRATION_DELTA: {
+				type: 'string'
+			},
+			USER_MODEL_PATH: {
 				type: 'string'
 			}
 		},
