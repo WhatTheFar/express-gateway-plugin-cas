@@ -47,7 +47,7 @@ export const initTestConfig = async (done: jest.DoneCallback) => {
 			await axiosInstance.post('/auth/user', credential, {
 				headers: apiKeyAuthHeader
 			});
-		// tslint:disable-next-line:no-empty
+			// tslint:disable-next-line:no-empty
 		} catch (error) {}
 
 		try {

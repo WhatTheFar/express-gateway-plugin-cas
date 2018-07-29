@@ -1,7 +1,7 @@
-import { initPassport } from './config/passport';
 import 'express-gateway';
 import { initConfig } from './config';
 import { initDatabase } from './config/db';
+import { initPassport } from './config/passport';
 import { initMiddleware } from './middleware/index';
 import authSecurePolicy from './policies/auth-secure-policy';
 import basicPolicy from './policies/basic-auth-policy';
