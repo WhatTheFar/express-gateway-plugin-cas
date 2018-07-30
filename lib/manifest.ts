@@ -58,10 +58,43 @@ const plugin: ExpressGateway.Plugin = {
 			USER_MODEL_PATH: {
 				type: 'string'
 			},
-			CORS_ORIGIN: {
-				type: ['string', 'boolean', 'array'],
-				items: { type: 'string' },
-				default: '*'
+			ADMIN_CORS: {
+				type: 'object',
+				properties: {
+					origin: {
+						type: ['string', 'boolean', 'array'],
+						items: { type: 'string' },
+						default: '*'
+					},
+					methods: {
+						type: ['string', 'array'],
+						items: { type: 'string' },
+						default: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE']
+					},
+					allowedHeaders: {
+						type: ['string', 'array'],
+						items: { type: 'string' }
+					},
+					exposedHeaders: {
+						type: 'array',
+						items: { type: 'string' }
+					},
+					credentials: {
+						type: 'boolean'
+					},
+					maxAge: {
+						type: 'integer'
+					},
+					optionsSuccessStatus: {
+						type: 'integer',
+						default: 204
+					},
+					preflightContinue: {
+						type: 'boolean',
+						default: false
+					}
+				},
+			default: {}
 			}
 		},
 		required: ['DATABASE_URL']
