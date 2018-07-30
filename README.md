@@ -51,7 +51,7 @@ plugins:
 |JWT_EXPIRATION_DELTA|This will be used to set the jwt expiration time.|null|-|
 |JWT_REFRESH_EXPIRATION_DELTA|This is how much time after the original token that future tokens can be refreshed from.|null|-|
 |USER_MODEL_PATH|path to sequelize model definition for a [custom user model](#customization)|null|-|
-|ADMIN_CORS|the plugin is using [Express Cors](https://github.com/expressjs/cors) which follows [Configuration Options](https://github.com/expressjs/cors#configuration-options)|[default](#the-default-configuration-is-the-equivalent-of:)||
+|ADMIN_CORS|the plugin is using [Express Cors](https://github.com/expressjs/cors) which follows [Configuration Options](https://github.com/expressjs/cors#configuration-options)|[default](#the-default-configuration-is-the-equivalent-of)||
 
 **Note:** `JWT_EXPIRATION_DELTA`, `JWT_REFRESH_EXPIRATION_DELTA` are strings describing a time span [zeit/ms](https://github.com/zeit/ms). Eg: "2 days", "10h", "7d". A string must provide the time units (days, hours, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
 
