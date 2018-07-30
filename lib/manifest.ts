@@ -94,7 +94,7 @@ const plugin: ExpressGateway.Plugin = {
 						default: false
 					}
 				},
-			default: {}
+				default: {}
 			}
 		},
 		required: ['DATABASE_URL']
