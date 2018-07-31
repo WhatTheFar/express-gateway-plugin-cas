@@ -1,6 +1,6 @@
 import { resolve } from 'path';
 import * as Sequelize from 'sequelize';
-import { hashPassword } from './../utils/user-util';
+import { comparePassword, hashPassword } from './../utils/user-util';
 export let User: UserModel;
 export const initUserModel = (
 	sequelize: Sequelize.Sequelize,
@@ -26,10 +26,10 @@ export const initUserModel = (
 	return UserModel;
 };
 
-const hashUserPassword = (user: UserInstance) => {
-	if (user.changed('password')) {
-		return hashPassword(user.password).then(hashed => {
-			user.password = hashed;
-		});
+const hashUserPassword = async (user: UserInstance) => {
+	const previousPassword = user.previous('password');
+	if (!previousPassword || !(await comparePassword(user, user.previous('password')))) {
+		user.password = await hashPassword(user.password);
+		return;
 	}
 };
