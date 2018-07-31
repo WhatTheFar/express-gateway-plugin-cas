@@ -28,7 +28,7 @@ export const initUserModel = (
 
 const hashUserPassword = async (user: UserInstance) => {
 	const previousPassword = user.previous('password');
-	if (!previousPassword || !(await comparePassword(user, user.previous('password')))) {
+	if (!previousPassword || !await comparePassword(user, user.previous('password'))) {
 		user.password = await hashPassword(user.password);
 		return;
 	}
