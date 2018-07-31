@@ -57,7 +57,8 @@ export default (gatewayExpressApp: Application) => {
 				if (error.name === 'SequelizeUniqueConstraintError') {
 					return ResponseUtil.sendDuplicateKeyError(
 						res,
-						'Unique column is duplicated.'
+						'Unique column is duplicated.',
+						error.errors
 					);
 				}
 				return ResponseUtil.sendValidationError(res, error.errors);
@@ -83,7 +84,8 @@ export default (gatewayExpressApp: Application) => {
 				if (error.name === 'SequelizeUniqueConstraintError') {
 					return ResponseUtil.sendDuplicateKeyError(
 						res,
-						'Unique column is duplicated.'
+						'Unique column is duplicated.',
+						error.errors
 					);
 				}
 				return ResponseUtil.sendValidationError(res, error.errors);

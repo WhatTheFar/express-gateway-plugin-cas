@@ -44,11 +44,16 @@ export class ResponseUtil {
 			errors
 		});
 
-	public static sendDuplicateKeyError = function(res: Response, message: string) {
+	public static sendDuplicateKeyError = function(
+		res: Response,
+		message: string,
+		errors: any[]
+	) {
 		res.status(400).json({
-			name: 'DuplicateKeyError',
+			name: 'SequelizeUniqueConstraintError',
 			code: 11000,
-			message
+			message,
+			errors
 		});
 	};
 }
