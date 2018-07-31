@@ -79,6 +79,8 @@ pipelines:
           - action:
               passThrough: true
       - jwt-auth:
+          - action:
+              passThrough: true
       - proxy: *proxy
   passSafe:
     apiEndpoints:
@@ -87,6 +89,8 @@ pipelines:
       - auth-secure:
       - basic-auth:
           - action:
-              passThroughSafeMethod: true
+              passThrough: true
       - jwt-auth:
+          - action:
+              passThroughSafeMethod: true
       - proxy: *proxy
