@@ -16,7 +16,9 @@ export default (gatewayExpressApp: Application) => {
 		apiKeyAuthorize,
 		asyncifyHandler(async (req, res, next) => {
 			try {
-				const users = await User.findAll();
+				const users = await User.findAll({
+					where: req.query
+				});
 				return res.json(getUserViews(users));
 			} catch (error) {
 				next(error);
